@@ -109,7 +109,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     fetch('/api/auth/me')
       .then(r => r.json())
-      .then(d => { if (d.user) setUser(d.user) })
+      .then(d => { if (d.user) setUser(d.user); else router.push('/login') })
       .catch(() => router.push('/login'))
   }, [router])
 
