@@ -1,8 +1,8 @@
-# Advance Hub — Deployment Guide (Render)
+# Asiana Hub — Deployment Guide (Render)
 
 ## Overview
 
-This guide walks a non-developer through deploying Advance Hub to Render.
+This guide walks a non-developer through deploying Asiana Hub to Render.
 **Estimated time: 30–45 minutes.**
 
 ---
@@ -12,7 +12,7 @@ This guide walks a non-developer through deploying Advance Hub to Render.
 1. A [GitHub](https://github.com) account (free)
 2. A [Render](https://render.com) account (free tier works)
 3. A [Resend](https://resend.com) account for email (free tier: 100 emails/day)
-4. Your project code (the `advance-hub` folder)
+4. Your project code (the `asiana-hub` folder)
 
 ---
 
@@ -20,15 +20,15 @@ This guide walks a non-developer through deploying Advance Hub to Render.
 
 1. Go to [github.com](https://github.com) and sign in
 2. Click **New repository** (the `+` button top-right)
-3. Name it `advance-hub`, set it to **Private**, click **Create repository**
-4. On your computer, open a terminal in the `advance-hub` folder and run:
+3. Name it `asiana-hub`, set it to **Private**, click **Create repository**
+4. On your computer, open a terminal in the `asiana-hub` folder and run:
 
 ```bash
 git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/advance-hub.git
+git remote add origin https://github.com/YOUR_USERNAME/asiana-hub.git
 git push -u origin main
 ```
 
@@ -43,7 +43,7 @@ The SQLite database needs a persistent disk so it survives restarts.
 1. Log in to [render.com](https://render.com)
 2. Click **New +** → **Web Service**
 3. Connect your GitHub account if not already done
-4. Select your `advance-hub` repository
+4. Select your `asiana-hub` repository
 5. On the configuration screen, scroll down to **Disks** (under Advanced)
 6. Click **Add Disk**:
    - **Name:** `data`
@@ -59,7 +59,7 @@ Fill in these settings on the Render web service form:
 
 | Setting | Value |
 |---|---|
-| **Name** | `advance-hub` |
+| **Name** | `asiana-hub` |
 | **Region** | Singapore (or closest to your users) |
 | **Branch** | `main` |
 | **Runtime** | `Node` |
@@ -116,11 +116,11 @@ Copy the output and paste it as the `JWT_SECRET` value.
 
 ## Step 7: First Login
 
-Once deployed, visit your Render URL (e.g. `https://advance-hub.onrender.com`)
+Once deployed, visit your Render URL (e.g. `https://asiana-hub.onrender.com`)
 
 **Default admin credentials:**
 ```
-Email:    admin@advancehub.com
+Email:    admin@asianahub.com
 Password: Admin@1234!
 ```
 

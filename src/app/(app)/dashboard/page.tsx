@@ -29,7 +29,7 @@ export default function DashboardPage() {
           Welcome back{user ? `, ${user.name.split(' ')[0]}` : ''}
         </h1>
         <p className="text-slate-500 text-sm mt-1">
-          {user ? roleLabel[user.role] : ''} · Advance Hub Staff Portal
+          {user ? roleLabel[user.role] : ''} · Asiana Hub Staff Portal
         </p>
       </div>
 

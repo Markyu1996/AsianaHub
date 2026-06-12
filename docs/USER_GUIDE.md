@@ -1,4 +1,4 @@
-# Advance Hub — User Guide
+# Asiana Hub — User Guide
 
 ---
 
@@ -6,7 +6,7 @@
 
 ### Registering an Account
 
-1. Visit the Advance Hub URL provided by your administrator
+1. Visit the Asiana Hub URL provided by your administrator
 2. Click **Request access** on the login page
 3. Fill in your full name, work email, and a password
    - Password must be at least 8 characters, include one uppercase letter and one number
@@ -16,7 +16,7 @@
 
 ### Logging In
 
-1. Visit the Advance Hub URL
+1. Visit the Asiana Hub URL
 2. Enter your email and password
 3. Click **Sign in**
 

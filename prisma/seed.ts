@@ -9,7 +9,7 @@ async function main() {
 
   // Check if admin already exists
   const existing = await prisma.user.findUnique({
-    where: { email: 'admin@advancehub.com' }
+    where: { email: 'admin@asianahub.com' }
   })
 
   if (existing) {
@@ -22,7 +22,7 @@ async function main() {
   await prisma.user.create({
     data: {
       name: 'System Administrator',
-      email: 'admin@advancehub.com',
+      email: 'admin@asianahub.com',
       passwordHash,
       role: 'admin',
       status: 'active',
@@ -31,7 +31,7 @@ async function main() {
   })
 
   console.log('✅ Default admin account created.')
-  console.log('   Email:    admin@advancehub.com')
+  console.log('   Email:    admin@asianahub.com')
   console.log('   Password: Admin@1234!')
   console.log('   ⚠️  CHANGE THIS PASSWORD ON FIRST LOGIN!')
 

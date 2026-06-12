@@ -27,19 +27,19 @@ function getTransporter() {
   }
 }
 
-const FROM = process.env.EMAIL_FROM || 'noreply@advancehub.com'
+const FROM = process.env.EMAIL_FROM || 'noreply@asianahub.com'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
 export async function sendAccountApprovedEmail(to: string, name: string) {
   const transporter = getTransporter()
   await transporter.sendMail({
     to,
-    subject: 'Your Advance Hub account has been approved',
+    subject: 'Your Asiana Hub account has been approved',
     html: `
       <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
         <h2 style="color: #1e40af;">Account Approved</h2>
         <p>Hi ${name},</p>
-        <p>Your Advance Hub account has been approved. You can now log in.</p>
+        <p>Your Asiana Hub account has been approved. You can now log in.</p>
         <a href="${APP_URL}/login" 
            style="display:inline-block;background:#2563eb;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;">
           Log In Now
@@ -58,7 +58,7 @@ export async function sendPasswordResetEmail(to: string, name: string, token: st
   
   await transporter.sendMail({
     to,
-    subject: 'Reset your Advance Hub password',
+    subject: 'Reset your Asiana Hub password',
     html: `
       <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
         <h2 style="color: #1e40af;">Password Reset</h2>

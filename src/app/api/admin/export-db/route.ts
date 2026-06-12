@@ -19,7 +19,7 @@ export async function GET() {
     return new Response(fileBuffer, {
       headers: {
         'Content-Type': 'application/octet-stream',
-        'Content-Disposition': `attachment; filename="advance-hub-backup-${dateStr}.db"`,
+        'Content-Disposition': `attachment; filename="asiana-hub-backup-${dateStr}.db"`,
         'Content-Length': String(fileBuffer.length),
       },
     })

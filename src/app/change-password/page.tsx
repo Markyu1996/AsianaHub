@@ -36,7 +36,7 @@ export default function ChangePasswordPage() {
     <div className="min-h-screen bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white">Advance Hub</h1>
+          <h1 className="text-2xl font-bold text-white">Asiana Hub</h1>
         </div>
         <div className="card p-8">
           <div className="flex items-center gap-3 mb-6 p-3 bg-amber-50 border border-amber-200 rounded-lg">

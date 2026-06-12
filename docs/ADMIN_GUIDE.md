@@ -1,4 +1,4 @@
-# Advance Hub — Administrator Guide
+# Asiana Hub — Administrator Guide
 
 ## Admin Role Overview
 
@@ -13,9 +13,9 @@ As an Administrator you have full access to every feature in the system:
 
 ## Logging In for the First Time
 
-1. Visit your Advance Hub URL
+1. Visit your Asiana Hub URL
 2. Log in with the default admin account:
-   - **Email:** `admin@advancehub.com`
+   - **Email:** `admin@asianahub.com`
    - **Password:** `Admin@1234!`
 3. You will be immediately redirected to change your password
 4. Set a strong password (min 8 characters, one uppercase, one number)

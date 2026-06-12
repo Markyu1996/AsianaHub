@@ -164,7 +164,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </svg>
           </div>
           <div>
-            <p className="text-white font-semibold text-sm leading-none">Advance Hub</p>
+            <p className="text-white font-semibold text-sm leading-none">Asiana Hub</p>
             <p className="text-slate-400 text-xs mt-0.5">Staff Portal</p>
           </div>
         </div>
@@ -284,7 +284,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <button onClick={() => setSidebarOpen(true)} className="p-1.5 rounded-lg hover:bg-slate-100">
             <Icon name="menu" className="w-5 h-5 text-slate-600" />
           </button>
-          <span className="font-semibold text-slate-900 text-sm">Advance Hub</span>
+          <span className="font-semibold text-slate-900 text-sm">Asiana Hub</span>
         </header>
 
         {/* Page content */}

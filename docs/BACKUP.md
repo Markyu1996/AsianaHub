@@ -1,4 +1,4 @@
-# Advance Hub — Backup Guide
+# Asiana Hub — Backup Guide
 
 ## Why Backup?
 
@@ -13,7 +13,7 @@ corruption, or account issues.**
 ### Method 1: Manual Download via Render Shell (Recommended)
 
 1. Go to your Render dashboard
-2. Click on your `advance-hub` service
+2. Click on your `asiana-hub` service
 3. Click the **Shell** tab (top right)
 4. Run the following command to create a safe backup copy:
 

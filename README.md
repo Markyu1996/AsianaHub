@@ -1,4 +1,4 @@
-# Advance Hub
+# Asiana Hub
 
 A staff management portal with a Money Advance Request module for managing and tracking student advance requests.
 
@@ -63,7 +63,7 @@ npm run dev
 Visit [http://localhost:3000](http://localhost:3000)
 
 **Default admin login:**
-- Email: `admin@advancehub.com`
+- Email: `admin@asianahub.com`
 - Password: `Admin@1234!`
 
 ---
@@ -89,7 +89,7 @@ See **[docs/USER_GUIDE.md](docs/USER_GUIDE.md)** for requester and approver inst
 ## Project Structure
 
 ```
-advance-hub/
+asiana-hub/
 ├── docs/                        # Guides
 │   ├── DEPLOYMENT.md
 │   ├── BACKUP.md
@@ -139,7 +139,7 @@ advance-hub/
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | admin@advancehub.com | Admin@1234! |
+| Admin | admin@asianahub.com | Admin@1234! |
 
 ⚠️ Change the admin password immediately on first login.
 
