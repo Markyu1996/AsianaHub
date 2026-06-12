@@ -2,7 +2,7 @@
 // src/app/(app)/admin/students/page.tsx
 import { useEffect, useState, useCallback, useRef } from 'react'
 import toast from 'react-hot-toast'
-import { formatDate } from '@/src/lib/utils'
+import { formatDate } from '@/lib/utils'
 
 interface Student {
   id: number; icNumber: string; name: string; isActive: boolean; createdAt: string

@@ -1,8 +1,8 @@
 // src/app/api/requests/[id]/complete/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireRole, logAudit } from '@/src/lib/auth'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireRole, logAudit } from '@/lib/auth'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function POST(
   req: NextRequest,

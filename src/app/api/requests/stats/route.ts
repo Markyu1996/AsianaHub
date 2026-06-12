@@ -1,7 +1,7 @@
 // src/app/api/requests/stats/route.ts
-import { requireSession } from '@/src/lib/auth'
-import { prisma } from '@/src/lib/prisma'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { requireSession } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function GET() {
   try {

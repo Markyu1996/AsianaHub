@@ -1,8 +1,8 @@
 // src/app/api/admin/users/[id]/reset-password/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireRole, hashPassword, logAudit } from '@/src/lib/auth'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireRole, hashPassword, logAudit } from '@/lib/auth'
+import { apiError, apiSuccess } from '@/lib/utils'
 import { z } from 'zod'
 
 const schema = z.object({

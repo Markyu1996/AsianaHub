@@ -1,9 +1,9 @@
 // src/app/api/admin/registrations/[id]/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireRole, logAudit } from '@/src/lib/auth'
-import { apiError, apiSuccess } from '@/src/lib/utils'
-import { sendAccountApprovedEmail } from '@/src/lib/email'
+import { prisma } from '@/lib/prisma'
+import { requireRole, logAudit } from '@/lib/auth'
+import { apiError, apiSuccess } from '@/lib/utils'
+import { sendAccountApprovedEmail } from '@/lib/email'
 import { z } from 'zod'
 
 const schema = z.object({

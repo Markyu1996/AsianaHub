@@ -1,9 +1,9 @@
 // src/app/api/auth/change-password/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireSession, verifyPassword, hashPassword, logAudit } from '@/src/lib/auth'
-import { changePasswordSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireSession, verifyPassword, hashPassword, logAudit } from '@/lib/auth'
+import { changePasswordSchema } from '@/lib/validations'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function POST(req: NextRequest) {
   try {

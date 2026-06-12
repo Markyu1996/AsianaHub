@@ -1,7 +1,7 @@
 // src/app/api/admin/registrations/route.ts
-import { requireRole } from '@/src/lib/auth'
-import { prisma } from '@/src/lib/prisma'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { requireRole } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function GET() {
   try {

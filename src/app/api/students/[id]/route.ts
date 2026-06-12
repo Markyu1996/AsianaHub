@@ -1,9 +1,9 @@
 // src/app/api/students/[id]/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireRole, logAudit } from '@/src/lib/auth'
-import { studentSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireRole, logAudit } from '@/lib/auth'
+import { studentSchema } from '@/lib/validations'
+import { apiError, apiSuccess } from '@/lib/utils'
 import { z } from 'zod'
 
 const updateStudentSchema = studentSchema.extend({

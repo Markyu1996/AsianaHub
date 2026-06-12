@@ -1,9 +1,9 @@
 // src/app/api/auth/login/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { verifyPassword, createToken, isAccountLocked, logAudit } from '@/src/lib/auth'
-import { loginSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { verifyPassword, createToken, isAccountLocked, logAudit } from '@/lib/auth'
+import { loginSchema } from '@/lib/validations'
+import { apiError, apiSuccess } from '@/lib/utils'
 import { cookies } from 'next/headers'
 
 const MAX_ATTEMPTS = parseInt(process.env.MAX_LOGIN_ATTEMPTS || '5')

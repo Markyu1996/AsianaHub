@@ -2,7 +2,7 @@
 // src/app/(app)/advance-requests/page.tsx
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { formatDate, getStatusColor, getStatusLabel } from '@/src/lib/utils'
+import { formatDate, getStatusColor, getStatusLabel } from '@/lib/utils'
 
 interface Request {
   id: number

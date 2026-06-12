@@ -2,7 +2,7 @@
 // src/app/(app)/admin/users/page.tsx
 import { useEffect, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
-import { formatDate } from '@/src/lib/utils'
+import { formatDate } from '@/lib/utils'
 
 interface User {
   id: number; name: string; email: string; role: string

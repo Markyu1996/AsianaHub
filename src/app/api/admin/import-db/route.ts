@@ -1,7 +1,7 @@
 // src/app/api/admin/import-db/route.ts
 import { NextRequest } from 'next/server'
-import { requireRole } from '@/src/lib/auth'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { requireRole } from '@/lib/auth'
+import { apiError, apiSuccess } from '@/lib/utils'
 import { writeFile } from 'fs/promises'
 import path from 'path'
 

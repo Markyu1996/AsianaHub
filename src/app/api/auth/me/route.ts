@@ -1,6 +1,6 @@
 // src/app/api/auth/me/route.ts
-import { getSession } from '@/src/lib/auth'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { getSession } from '@/lib/auth'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function GET() {
   const session = await getSession()

@@ -1,9 +1,9 @@
 // src/app/api/admin/users/[id]/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireRole, hashPassword, logAudit } from '@/src/lib/auth'
-import { updateUserSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireRole, hashPassword, logAudit } from '@/lib/auth'
+import { updateUserSchema } from '@/lib/validations'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function PUT(
   req: NextRequest,

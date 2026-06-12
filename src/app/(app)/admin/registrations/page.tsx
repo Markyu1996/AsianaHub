@@ -2,7 +2,7 @@
 // src/app/(app)/admin/registrations/page.tsx
 import { useEffect, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
-import { formatDateTime } from '@/src/lib/utils'
+import { formatDateTime } from '@/lib/utils'
 
 interface PendingUser { id: number; name: string; email: string; createdAt: string }
 

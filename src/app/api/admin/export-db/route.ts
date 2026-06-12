@@ -1,6 +1,6 @@
 // src/app/api/admin/export-db/route.ts
-import { requireRole } from '@/src/lib/auth'
-import { apiError } from '@/src/lib/utils'
+import { requireRole } from '@/lib/auth'
+import { apiError } from '@/lib/utils'
 import { readFile } from 'fs/promises'
 import path from 'path'
 

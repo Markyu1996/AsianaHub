@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import { formatDateTime, getStatusColor, getStatusLabel, generateBankReference } from '@/src/lib/utils'
+import { formatDateTime, getStatusColor, getStatusLabel, generateBankReference } from '@/lib/utils'
 
 interface RequestDetail {
   id: number

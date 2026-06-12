@@ -1,10 +1,10 @@
 // src/app/api/auth/forgot-password/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { forgotPasswordSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess, generateResetToken } from '@/src/lib/utils'
-import { sendPasswordResetEmail } from '@/src/lib/email'
-import { logAudit } from '@/src/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { forgotPasswordSchema } from '@/lib/validations'
+import { apiError, apiSuccess, generateResetToken } from '@/lib/utils'
+import { sendPasswordResetEmail } from '@/lib/email'
+import { logAudit } from '@/lib/auth'
 
 const EXPIRY_MINUTES = parseInt(process.env.RESET_TOKEN_EXPIRY_MINUTES || '60')
 

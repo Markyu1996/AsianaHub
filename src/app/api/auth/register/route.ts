@@ -1,9 +1,9 @@
 // src/app/api/auth/register/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { hashPassword, logAudit } from '@/src/lib/auth'
-import { registerSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { hashPassword, logAudit } from '@/lib/auth'
+import { registerSchema } from '@/lib/validations'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,9 +1,9 @@
 // src/app/api/requests/[id]/attend/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireRole, logAudit } from '@/src/lib/auth'
-import { attendRequestSchema } from '@/src/lib/validations'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireRole, logAudit } from '@/lib/auth'
+import { attendRequestSchema } from '@/lib/validations'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function POST(
   req: NextRequest,

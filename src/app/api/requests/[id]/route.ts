@@ -1,8 +1,8 @@
 // src/app/api/requests/[id]/route.ts
 import { NextRequest } from 'next/server'
-import { prisma } from '@/src/lib/prisma'
-import { requireSession } from '@/src/lib/auth'
-import { apiError, apiSuccess } from '@/src/lib/utils'
+import { prisma } from '@/lib/prisma'
+import { requireSession } from '@/lib/auth'
+import { apiError, apiSuccess } from '@/lib/utils'
 
 export async function GET(
   req: NextRequest,
