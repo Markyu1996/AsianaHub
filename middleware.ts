@@ -1,6 +1,6 @@
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from '@/src/lib/auth'
+import { verifyToken } from '@/lib/auth'
 
 const PUBLIC_PATHS = ['/login', '/register', '/forgot-password', '/reset-password']
 const API_PUBLIC_PATHS = [
