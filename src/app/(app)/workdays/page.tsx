@@ -232,7 +232,7 @@ export default function WorkdaysPage() {
     <div className="max-w-6xl mx-auto">
       <div className="page-header">
         <div>
-          <h1>Workday Tracking</h1>
+          <h1>Internship Workday</h1>
           <p className="text-slate-500 text-sm mt-0.5">
             {rows.length} student{rows.length === 1 ? '' : 's'}
             {settings ? ` · ${completedCount} completed · target ${settings.requiredWorkdays} days @ ${settings.workdaysPerWeek}/wk` : ''}
@@ -338,7 +338,7 @@ export default function WorkdaysPage() {
 
       {settings && settings.requiredWorkdays === 0 && (
         <p className="text-xs text-amber-600 mt-3">
-          ⚠️ Required workdays is not set yet — remaining/completion estimates need it. An admin can set it in Workday Settings.
+          ⚠️ Required workdays is not set yet — remaining/completion estimates need it. An admin can set it in Internship Workday Settings.
         </p>
       )}
 

@@ -72,6 +72,27 @@ export default function DashboardPage() {
             </div>
           </div>
         </Link>
+
+        {/* Internship Workday Card */}
+        <Link href="/workdays" className="card p-6 hover:shadow-md hover:border-brand-200 transition-all group">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-brand-600 transition-colors">
+              <svg className="w-6 h-6 text-brand-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900 group-hover:text-brand-700">Internship Workday</h3>
+              <p className="text-sm text-slate-500 mt-1">Track cumulative internship workdays and estimated completion per student.</p>
+              <span className="inline-flex items-center gap-1 text-xs text-brand-600 font-medium mt-3">
+                Open module
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </Link>
       </div>
     </div>
   )

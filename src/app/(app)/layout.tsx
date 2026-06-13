@@ -42,7 +42,7 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
         { href: '/reports', label: 'Reports', icon: 'chart' },
       ],
     },
-    { type: 'link', href: '/workdays', label: 'Workday Tracking', icon: 'calendar' },
+    { type: 'link', href: '/workdays', label: 'Internship Workday', icon: 'calendar' },
   ],
   approver: [
     { type: 'link', href: '/dashboard', label: 'Dashboard', icon: 'home' },
@@ -55,7 +55,7 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
         { href: '/reports', label: 'Reports', icon: 'chart' },
       ],
     },
-    { type: 'link', href: '/workdays', label: 'Workday Tracking', icon: 'calendar' },
+    { type: 'link', href: '/workdays', label: 'Internship Workday', icon: 'calendar' },
   ],
   admin: [
     { type: 'link', href: '/dashboard', label: 'Dashboard', icon: 'home' },
@@ -69,7 +69,7 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
         { href: '/reports', label: 'Reports', icon: 'chart' },
       ],
     },
-    { type: 'link', href: '/workdays', label: 'Workday Tracking', icon: 'calendar' },
+    { type: 'link', href: '/workdays', label: 'Internship Workday', icon: 'calendar' },
     {
       type: 'group',
       label: 'Administration',
@@ -78,7 +78,7 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
         { href: '/admin/registrations', label: 'Registrations', icon: 'users' },
         { href: '/admin/users', label: 'Users', icon: 'user-cog' },
         { href: '/admin/students', label: 'Students', icon: 'academic' },
-        { href: '/admin/workday-settings', label: 'Workday Settings', icon: 'calendar' },
+        { href: '/admin/workday-settings', label: 'Internship Workday Settings', icon: 'calendar' },
         { href: '/admin/backup', label: 'Backup & Restore', icon: 'database' },
       ],
     },

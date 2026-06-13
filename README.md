@@ -7,7 +7,7 @@ A staff management portal with a Money Advance Request module for managing and t
 - 🔐 **Secure authentication** — email/password login, account lockout, password reset
 - 👥 **Role-based access** — Requester, Approver, Administrator
 - 💰 **Money Advance module** — full request lifecycle (Pending → Attended → Pending Return → Completed)
-- 📆 **Workday Tracking module** — monthly CSV upload of cumulative internship workdays per student, with live estimation of days worked, days remaining, and projected completion date per employer group
+- 📆 **Internship Workday module** — monthly CSV upload of cumulative internship workdays per student, with live estimation of days worked, days remaining, and projected completion date per employer group
 - 🎓 **Student management** — searchable student list with CSV bulk import
 - 📋 **Audit trail** — every action recorded with user and timestamp
 - 🏦 **Bank reference generator** — one-click copy of formatted transfer reference
