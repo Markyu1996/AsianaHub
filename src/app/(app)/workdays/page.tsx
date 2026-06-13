@@ -338,7 +338,7 @@ export default function WorkdaysPage() {
 
       {settings && settings.requiredWorkdays === 0 && (
         <p className="text-xs text-amber-600 mt-3">
-          ⚠️ Required workdays is not set yet — remaining/completion estimates need it. An admin can set it in Internship Workday Settings.
+          ⚠️ Required workdays is not set yet — remaining/completion estimates need it. An admin can set it in Workday Settings.
         </p>
       )}
 

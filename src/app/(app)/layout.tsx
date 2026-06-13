@@ -78,7 +78,7 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
         { href: '/admin/registrations', label: 'Registrations', icon: 'users' },
         { href: '/admin/users', label: 'Users', icon: 'user-cog' },
         { href: '/admin/students', label: 'Students', icon: 'academic' },
-        { href: '/admin/workday-settings', label: 'Internship Workday Settings', icon: 'calendar' },
+        { href: '/admin/workday-settings', label: 'Workday Settings', icon: 'calendar' },
         { href: '/admin/backup', label: 'Backup & Restore', icon: 'database' },
       ],
     },

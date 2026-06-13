@@ -157,7 +157,7 @@ export default function WorkdaySettingsPage() {
     <div className="max-w-3xl mx-auto">
       <div className="page-header">
         <div>
-          <h1>Internship Workday Settings</h1>
+          <h1>Workday Settings</h1>
           <p className="text-slate-500 text-sm mt-0.5">Estimation variables and employer groups</p>
         </div>
       </div>
