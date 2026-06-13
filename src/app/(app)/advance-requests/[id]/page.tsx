@@ -12,6 +12,7 @@ interface RequestDetail {
   frequency: number
   status: string
   comment: string | null
+  remark: string | null
   createdAt: string
   attendedAt: string | null
   returnedAt: string | null
@@ -253,9 +254,15 @@ export default function RequestDetailPage() {
             <dt className="text-sm text-slate-500">Advance frequency</dt>
             <dd className="text-sm font-semibold text-slate-900">#{request.frequency}</dd>
           </div>
-          <div className="flex items-center justify-between py-2">
+          <div className="flex items-center justify-between py-2 border-b border-slate-100">
             <dt className="text-sm text-slate-500">Submitted by</dt>
             <dd className="text-sm text-slate-700">{request.requester.name}</dd>
+          </div>
+          <div className="pt-2">
+            <dt className="text-sm text-slate-500 mb-1">Requester remark</dt>
+            <dd className="text-sm text-slate-700 whitespace-pre-wrap">
+              {request.remark || <span className="text-slate-400">—</span>}
+            </dd>
           </div>
         </dl>
       </div>

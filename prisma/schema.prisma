@@ -56,7 +56,8 @@ model AdvanceRequest {
   amount      Int       // whole numbers only, in RM
   frequency   Int       // auto-calculated
   status      String    @default("pending") // pending | completed | deleted
-  comment     String?
+  comment     String?   // approver/admin note added at approval or deletion
+  remark      String?   // optional note from the requester at submission
 
   // attendedBy/attendedAt and returnedBy/returnedAt are both set to the
   // approver at approval time (approval immediately completes the request).

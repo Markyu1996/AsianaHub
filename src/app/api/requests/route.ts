@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
       return apiError(parsed.error.errors[0].message)
     }
 
-    const { studentId, amount } = parsed.data
+    const { studentId, amount, remark } = parsed.data
 
     // Verify student exists and is active
     const student = await prisma.student.findUnique({ where: { id: studentId } })
@@ -120,6 +120,7 @@ export async function POST(req: NextRequest) {
         amount,
         frequency,
         status: 'pending',
+        remark: remark?.trim() || null,
       },
       include: {
         student: { select: { id: true, name: true, icNumber: true } },

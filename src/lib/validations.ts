@@ -57,6 +57,7 @@ export const createRequestSchema = z.object({
     .int('Amount must be a whole number')
     .min(1, 'Amount must be at least RM1')
     .max(200, 'Amount cannot exceed RM200'),
+  remark: z.string().max(500, 'Remark is too long').optional(),
 })
 
 export const approveRequestSchema = z.object({
