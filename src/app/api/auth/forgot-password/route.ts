@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
       where: { email: email.toLowerCase() }
     })
 
+    console.log(`[forgot-password] lookup email=${email.toLowerCase()} found=${!!user} status=${user?.status ?? 'none'}`)
+
     if (user && user.status === 'active') {
       // Invalidate existing tokens
       await prisma.passwordResetToken.updateMany({
