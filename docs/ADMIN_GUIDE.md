@@ -116,8 +116,7 @@ Set the **Status** filter to **Deleted**.
 ### Actions available per status:
 | Status | Admin can |
 |---|---|
-| Pending | Mark as Attended, Delete |
-| Pending Return | Mark as Returned, Delete |
+| Pending | Approve, Delete |
 | Completed | Delete |
 | Deleted | View only |
 

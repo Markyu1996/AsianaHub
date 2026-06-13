@@ -16,7 +16,6 @@ interface RequestDetail {
   attendedAt: string | null
   returnedAt: string | null
   deletedAt: string | null
-  hasOutstanding: boolean
   student: { id: number; name: string; icNumber: string }
   requester: { id: number; name: string; email: string }
   attendedByUser: { id: number; name: string } | null
@@ -27,22 +26,38 @@ interface RequestDetail {
 interface SessionUser { id: number; name: string; role: string }
 
 function ConfirmModal({
-  title, message, confirmLabel, confirmClass, onConfirm, onCancel, withComment
+  title, message, confirmLabel, confirmClass, onConfirm, onCancel, withComment, withDate
 }: {
   title: string
   message: string
   confirmLabel: string
   confirmClass: string
-  onConfirm: (comment: string) => void
+  onConfirm: (comment: string, date: string) => void
   onCancel: () => void
   withComment?: boolean
+  withDate?: boolean
 }) {
+  const today = new Date().toISOString().slice(0, 10)
   const [comment, setComment] = useState('')
+  const [date, setDate] = useState(today)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="card p-6 w-full max-w-md">
         <h3 className="text-lg font-semibold text-slate-900 mb-2">{title}</h3>
         <p className="text-slate-500 text-sm mb-4">{message}</p>
+        {withDate && (
+          <div className="mb-4">
+            <label className="label">Approval date</label>
+            <input
+              type="date"
+              className="input"
+              value={date}
+              max={today}
+              onChange={e => setDate(e.target.value)}
+            />
+            <p className="text-xs text-slate-400 mt-1">Defaults to today — change it to record a backdated approval.</p>
+          </div>
+        )}
         {withComment && (
           <div className="mb-4">
             <label className="label">Comment (optional)</label>
@@ -58,7 +73,7 @@ function ConfirmModal({
         )}
         <div className="flex gap-3 justify-end">
           <button className="btn-secondary" onClick={onCancel}>Cancel</button>
-          <button className={confirmClass} onClick={() => onConfirm(comment)}>{confirmLabel}</button>
+          <button className={confirmClass} onClick={() => onConfirm(comment, date)} disabled={withDate && !date}>{confirmLabel}</button>
         </div>
       </div>
     </div>
@@ -74,8 +89,11 @@ export default function RequestDetailPage() {
   const [request, setRequest] = useState<RequestDetail | null>(null)
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState(false)
-  const [modal, setModal] = useState<'attend' | 'complete' | 'delete' | null>(null)
+  const [modal, setModal] = useState<'approve' | 'delete' | null>(null)
   const [copied, setCopied] = useState(false)
+  const [editingDate, setEditingDate] = useState(false)
+  const [dateValue, setDateValue] = useState('')
+  const [savingDate, setSavingDate] = useState(false)
 
   useEffect(() => {
     fetch('/api/auth/me').then(r => r.json()).then(d => setUser(d.user))
@@ -92,21 +110,22 @@ export default function RequestDetailPage() {
 
   useEffect(() => { fetchRequest() }, [fetchRequest])
 
-  async function handleAction(action: 'attend' | 'complete' | 'delete', comment: string) {
+  async function handleAction(action: 'approve' | 'delete', comment: string, date?: string) {
     setActionLoading(true)
     setModal(null)
     try {
+      const body: { comment: string; approvedDate?: string } = { comment }
+      if (action === 'approve' && date) body.approvedDate = date
       const res = await fetch(`/api/requests/${id}/${action}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ comment }),
+        body: JSON.stringify(body),
       })
       const data = await res.json()
       if (!res.ok) { toast.error(data.error); return }
 
       const messages = {
-        attend: 'Request marked as attended',
-        complete: 'Advance marked as returned — request completed',
+        approve: 'Request approved & completed',
         delete: 'Request deleted',
       }
       toast.success(messages[action])
@@ -120,6 +139,34 @@ export default function RequestDetailPage() {
       toast.error('Something went wrong')
     } finally {
       setActionLoading(false)
+    }
+  }
+
+  function startEditDate() {
+    // Pre-fill the date input with the current approved date (yyyy-mm-dd)
+    const current = request?.returnedAt ? new Date(request.returnedAt) : new Date()
+    setDateValue(current.toISOString().slice(0, 10))
+    setEditingDate(true)
+  }
+
+  async function handleSaveDate() {
+    if (!dateValue) return
+    setSavingDate(true)
+    try {
+      const res = await fetch(`/api/requests/${id}/approved-date`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approvedDate: dateValue }),
+      })
+      const data = await res.json()
+      if (!res.ok) { toast.error(data.error || 'Could not update date'); return }
+      toast.success('Approved date updated')
+      setEditingDate(false)
+      fetchRequest()
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setSavingDate(false)
     }
   }
 
@@ -185,21 +232,6 @@ export default function RequestDetailPage() {
           {getStatusLabel(request.status)}
         </span>
       </div>
-
-      {/* Outstanding warning */}
-      {request.hasOutstanding && canAct && request.status === 'pending' && (
-        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl mb-5">
-          <svg className="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-          <div>
-            <p className="text-red-800 font-semibold text-sm">Outstanding advance warning</p>
-            <p className="text-red-600 text-sm mt-0.5">
-              This student has an existing advance that has not been returned yet.
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Main info card */}
       <div className="card p-6 mb-4">
@@ -284,7 +316,7 @@ export default function RequestDetailPage() {
           {request.returnedByUser && request.returnedAt && (
             <li className="ml-4">
               <div className="absolute w-3 h-3 bg-green-500 rounded-full -left-1.5 border-2 border-white" />
-              <p className="text-sm font-medium text-slate-900">Advance returned — completed</p>
+              <p className="text-sm font-medium text-slate-900">Approved &amp; completed</p>
               <p className="text-xs text-slate-500">{request.returnedByUser.name} · {formatDateTime(request.returnedAt)}</p>
             </li>
           )}
@@ -304,31 +336,58 @@ export default function RequestDetailPage() {
         )}
       </div>
 
+      {/* Approved date — admins can correct/backdate it (e.g. for backlog) */}
+      {user?.role === 'admin' && request.status === 'completed' && (
+        <div className="card p-5 mb-4">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900">Approved date</h3>
+              <p className="text-sm text-slate-500 mt-0.5">
+                {request.returnedAt ? formatDateTime(request.returnedAt) : 'Not set'}
+              </p>
+            </div>
+            {!editingDate && (
+              <button className="btn-secondary btn-sm" onClick={startEditDate}>
+                Edit date
+              </button>
+            )}
+          </div>
+          {editingDate && (
+            <div className="flex flex-wrap items-end gap-3 mt-3">
+              <div className="flex-1 min-w-[160px]">
+                <label className="label">Approved on</label>
+                <input
+                  type="date"
+                  className="input"
+                  value={dateValue}
+                  max={new Date().toISOString().slice(0, 10)}
+                  onChange={e => setDateValue(e.target.value)}
+                />
+              </div>
+              <button className="btn-primary" onClick={handleSaveDate} disabled={savingDate || !dateValue}>
+                {savingDate ? 'Saving…' : 'Save'}
+              </button>
+              <button className="btn-secondary" onClick={() => setEditingDate(false)} disabled={savingDate}>
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Action buttons */}
       {!isDeleted && canAct && (
         <div className="card p-4 flex flex-wrap gap-3">
           {request.status === 'pending' && (
             <button
-              className="btn-primary"
-              onClick={() => setModal('attend')}
+              className="btn bg-green-600 text-white hover:bg-green-700"
+              onClick={() => setModal('approve')}
               disabled={actionLoading}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Mark as Attended
-            </button>
-          )}
-          {request.status === 'pending_return' && (
-            <button
-              className="btn bg-green-600 text-white hover:bg-green-700"
-              onClick={() => setModal('complete')}
-              disabled={actionLoading}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Mark as Returned
+              Approve
             </button>
           )}
           {canDelete && (
@@ -347,25 +406,16 @@ export default function RequestDetailPage() {
       )}
 
       {/* Modals */}
-      {modal === 'attend' && (
+      {modal === 'approve' && (
         <ConfirmModal
-          title="Mark as Attended"
-          message="Confirm that you have disbursed the advance to the student. This will move the request to Pending Return."
-          confirmLabel="Confirm Attended"
-          confirmClass="btn-primary"
-          onConfirm={comment => handleAction('attend', comment)}
-          onCancel={() => setModal(null)}
-          withComment
-        />
-      )}
-      {modal === 'complete' && (
-        <ConfirmModal
-          title="Mark as Returned"
-          message="Confirm that the student has returned the advance. This will complete the request."
-          confirmLabel="Confirm Returned"
+          title="Approve Request"
+          message="Confirm that you have disbursed the advance to the student. This will complete the request."
+          confirmLabel="Confirm Approval"
           confirmClass="btn bg-green-600 text-white hover:bg-green-700"
-          onConfirm={comment => handleAction('complete', comment)}
+          onConfirm={(comment, date) => handleAction('approve', comment, date)}
           onCancel={() => setModal(null)}
+          withDate
+          withComment
         />
       )}
       {modal === 'delete' && (

@@ -57,9 +57,9 @@ export async function DELETE(
     const student = await prisma.student.findUnique({ where: { id } })
     if (!student) return apiError('Student not found', 404)
 
-    // Check for active requests
+    // Check for active (still-pending) requests
     const activeRequests = await prisma.advanceRequest.count({
-      where: { studentId: id, status: { in: ['pending', 'attended', 'pending_return'] } }
+      where: { studentId: id, status: 'pending' }
     })
 
     if (activeRequests > 0) {

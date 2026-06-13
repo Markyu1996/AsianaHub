@@ -55,9 +55,11 @@ model AdvanceRequest {
   requesterId Int
   amount      Int       // whole numbers only, in RM
   frequency   Int       // auto-calculated
-  status      String    @default("pending") // pending | attended | pending_return | completed | deleted
+  status      String    @default("pending") // pending | completed | deleted
   comment     String?
 
+  // attendedBy/attendedAt and returnedBy/returnedAt are both set to the
+  // approver at approval time (approval immediately completes the request).
   attendedBy  Int?
   attendedAt  DateTime?
   returnedBy  Int?
@@ -79,7 +81,7 @@ model AdvanceRequest {
 model AuditLog {
   id         Int      @id @default(autoincrement())
   userId     Int?
-  action     String   // REQUEST_CREATED | MARKED_ATTENDED | MARKED_COMPLETED | REQUEST_DELETED | ACCOUNT_APPROVED | PASSWORD_RESET | STUDENT_CREATED | STUDENT_UPDATED | USER_DEACTIVATED
+  action     String   // REQUEST_CREATED | REQUEST_APPROVED | APPROVED_DATE_UPDATED | REQUEST_DELETED | ACCOUNT_APPROVED | PASSWORD_RESET | STUDENT_CREATED | STUDENT_UPDATED | USER_DEACTIVATED
   entityType String   // request | student | user
   entityId   Int?
   metadata   String?  // JSON string

@@ -56,8 +56,7 @@ Requesters can submit money advance requests on behalf of students.
 | Status | Meaning |
 |---|---|
 | **Pending** | Submitted, waiting for an approver to review |
-| **Pending Return** | Advance has been paid to the student, awaiting repayment |
-| **Completed** | Student has returned the advance — request closed |
+| **Completed** | Approved and paid to the student — request closed |
 
 ### Searching and Filtering
 
@@ -86,17 +85,16 @@ Approvers review pending requests and manage the advance lifecycle.
    - Student name and ID
    - Amount requested
    - Advance frequency (how many times this student has requested)
-   - ⚠️ A red warning will appear if this student has an **outstanding unreturned advance**
 
-### Marking a Request as Attended (Disbursing the advance)
+### Approving a Request (Disbursing the advance)
 
 1. Open the request detail page
-2. Click **Mark as Attended**
+2. Click **Approve**
 3. Optionally add a comment
-4. Click **Confirm Attended**
-5. The request moves to **Pending Return** status
+4. Click **Confirm Approval**
+5. The request moves straight to **Completed** status
 
-> This means you have approved **and** paid the advance to the student in one step.
+> Approving means you have reviewed **and** paid the advance to the student. There is no separate repayment step — approval completes the request.
 
 ### Copying the Bank Transfer Reference
 
@@ -109,16 +107,9 @@ Before making the bank transfer:
    ```
 4. Paste this into the **reference/description** field when making the bank transfer
 
-### Marking a Request as Returned (Completing)
-
-Once the student repays the advance:
-1. Open the request detail page (status should be **Pending Return**)
-2. Click **Mark as Returned**
-3. Confirm — the request is now **Completed**
-
 ### Deleting a Pending Request
 
-If a request needs to be cancelled before it is attended:
+If a request needs to be cancelled before it is approved:
 1. Open the request detail page (must be **Pending** status)
 2. Click **Delete Request**
 3. Optionally add a reason/comment
@@ -131,7 +122,7 @@ If a request needs to be cancelled before it is attended:
 ## Dashboard
 
 After logging in, the **Dashboard** shows:
-- Quick stats: number of pending, pending return, completed, and total requests
+- Quick stats: number of pending, completed, and total requests
 - Feature cards — click **Money Advance** to go to the requests module
 
 ---
