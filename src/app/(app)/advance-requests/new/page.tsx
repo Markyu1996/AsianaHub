@@ -125,7 +125,7 @@ export default function NewRequestPage() {
             </svg>
             Back to requests
           </Link>
-          <h1>New Money Advance Request</h1>
+          <h1>New Allowance Advance Request</h1>
           <p className="text-slate-500 text-sm mt-1">Maximum amount: RM200 per request</p>
         </div>
       </div>

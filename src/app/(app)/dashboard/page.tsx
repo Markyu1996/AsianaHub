@@ -52,7 +52,7 @@ export default function DashboardPage() {
       {/* Feature cards */}
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Features</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Money Advance Card */}
+        {/* Allowance Advance Card */}
         <Link href="/advance-requests" className="card p-6 hover:shadow-md hover:border-brand-200 transition-all group">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-brand-600 transition-colors">
@@ -61,7 +61,7 @@ export default function DashboardPage() {
               </svg>
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900 group-hover:text-brand-700">Money Advance</h3>
+              <h3 className="font-semibold text-slate-900 group-hover:text-brand-700">Allowance Advance</h3>
               <p className="text-sm text-slate-500 mt-1">Submit and manage student advance requests up to RM200.</p>
               <span className="inline-flex items-center gap-1 text-xs text-brand-600 font-medium mt-3">
                 Open module
