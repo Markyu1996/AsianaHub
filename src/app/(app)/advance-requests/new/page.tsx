@@ -17,6 +17,7 @@ export default function NewRequestPage() {
   const [isNewStudent, setIsNewStudent] = useState(false)
   const [newStudentId, setNewStudentId] = useState('')
   const [amount, setAmount] = useState('')
+  const [remark, setRemark] = useState('')
   const [frequency, setFrequency] = useState<number | null>(null)
   const [error, setError] = useState('')
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -100,7 +101,7 @@ export default function NewRequestPage() {
       const res = await fetch('/api/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId, amount: amt }),
+        body: JSON.stringify({ studentId, amount: amt, remark: remark.trim() || undefined }),
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error); return }
@@ -271,6 +272,19 @@ export default function NewRequestPage() {
               />
             </div>
             <p className="text-xs text-slate-400 mt-1">Maximum RM200. Whole numbers only.</p>
+          </div>
+
+          {/* Remark (optional) */}
+          <div>
+            <label className="label">Remark <span className="text-slate-400 font-normal">(optional)</span></label>
+            <textarea
+              className="input resize-none"
+              rows={3}
+              placeholder="Add a note about this request…"
+              value={remark}
+              onChange={e => setRemark(e.target.value)}
+              maxLength={500}
+            />
           </div>
 
           {error && (
