@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {
@@ -46,15 +47,15 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo area */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-white/10 rounded-2xl mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Asiana Hub</h1>
-          <p className="text-brand-200 text-sm mt-1">Staff Management Portal</p>
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/logo.png"
+            alt="Asiana Hospitality Academy"
+            width={220}
+            height={74}
+            className="h-auto"
+            priority
+          />
         </div>
 
         <div className="card p-8">
