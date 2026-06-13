@@ -16,9 +16,23 @@ function getTransporter() {
     })
   }
 
+  // Generic SMTP (e.g. Gmail with an App Password — no domain required)
+  if (process.env.SMTP_HOST) {
+    const port = Number(process.env.SMTP_PORT || 587)
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port,
+      secure: port === 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    })
+  }
+
   // Fallback: console log in development
   return {
-    sendMail: async (opts: { to: string; subject: string; html: string }) => {
+    sendMail: async (opts: { from?: string; to: string; subject: string; html: string }) => {
       console.log('📧 EMAIL (dev mode — not sent):')
       console.log('  To:', opts.to)
       console.log('  Subject:', opts.subject)
@@ -33,6 +47,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 export async function sendAccountApprovedEmail(to: string, name: string) {
   const transporter = getTransporter()
   await transporter.sendMail({
+    from: FROM,
     to,
     subject: 'Your Asiana Hub account has been approved',
     html: `
@@ -57,6 +72,7 @@ export async function sendPasswordResetEmail(to: string, name: string, token: st
   const resetUrl = `${APP_URL}/reset-password?token=${token}`
   
   await transporter.sendMail({
+    from: FROM,
     to,
     subject: 'Reset your Asiana Hub password',
     html: `
