@@ -94,3 +94,53 @@ export async function sendPasswordResetEmail(to: string, name: string, token: st
   })
   console.log(`[email] password reset sent to=${to} messageId=${info?.messageId}`)
 }
+
+export async function sendNewRequestNotification(
+  recipients: string[],
+  details: {
+    requestId: number
+    studentName: string
+    icNumber: string
+    amount: number
+    frequency: number
+    requesterName: string
+    remark?: string | null
+  }
+) {
+  if (recipients.length === 0) return
+  const transporter = getTransporter()
+  const url = `${APP_URL}/advance-requests/${details.requestId}`
+  const remarkRow = details.remark
+    ? `<tr><td style="padding:4px 0;color:#6b7280;">Remark</td><td style="padding:4px 0;font-weight:600;">${details.remark}</td></tr>`
+    : ''
+
+  const info = await transporter.sendMail({
+    from: FROM,
+    to: FROM,
+    // BCC so recipients don't see each other's addresses
+    bcc: recipients.join(','),
+    subject: `New advance request: ${details.studentName} — RM${details.amount}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
+        <h2 style="color: #1e40af;">New Money Advance Request</h2>
+        <p>A new advance request has been submitted and is waiting for approval.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin:16px 0;">
+          <tr><td style="padding:4px 0;color:#6b7280;">Student</td><td style="padding:4px 0;font-weight:600;">${details.studentName}</td></tr>
+          <tr><td style="padding:4px 0;color:#6b7280;">IC Number</td><td style="padding:4px 0;font-weight:600;">${details.icNumber}</td></tr>
+          <tr><td style="padding:4px 0;color:#6b7280;">Amount</td><td style="padding:4px 0;font-weight:600;">RM${details.amount}</td></tr>
+          <tr><td style="padding:4px 0;color:#6b7280;">Frequency</td><td style="padding:4px 0;font-weight:600;">#${details.frequency} this month</td></tr>
+          <tr><td style="padding:4px 0;color:#6b7280;">Submitted by</td><td style="padding:4px 0;font-weight:600;">${details.requesterName}</td></tr>
+          ${remarkRow}
+        </table>
+        <a href="${url}"
+           style="display:inline-block;background:#2563eb;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;">
+          Review Request
+        </a>
+        <p style="color:#6b7280;font-size:13px;margin-top:24px;">
+          You're receiving this because you are an approver or administrator on Asiana Hub.
+        </p>
+      </div>
+    `
+  })
+  console.log(`[email] new-request notification sent to ${recipients.length} recipient(s) messageId=${info?.messageId}`)
+}
