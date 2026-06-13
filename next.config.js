@@ -9,7 +9,15 @@ const nextConfig = {
   // Force HTTPS redirects handled at Render level
   // Output standalone for Docker/Render deployment
   output: 'standalone',
-  
+
+  // In standalone mode the next/image optimizer requires the native `sharp`
+  // package at runtime; without it the /_next/image endpoint 500s and images
+  // render as broken. The logo is a fixed-size asset that does not need
+  // on-the-fly optimization, so serve images directly from /public instead.
+  images: {
+    unoptimized: true,
+  },
+
   // Security headers
   async headers() {
     return [
