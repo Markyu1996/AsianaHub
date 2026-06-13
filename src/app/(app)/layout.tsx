@@ -157,15 +157,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="px-4 py-4 border-b border-slate-800">
-        <Image
-          src="/logo.png"
-          alt="Asiana Hospitality Academy"
-          width={180}
-          height={60}
-          className="w-full h-auto"
-          priority
-        />
+      <div className="px-4 py-4 border-b border-slate-800 flex justify-center">
+        <div className="bg-white rounded-xl p-3 w-full flex justify-center">
+          <Image
+            src="/logo-stacked.png"
+            alt="Asiana Hospitality Academy"
+            width={160}
+            height={139}
+            className="h-auto w-auto max-h-32"
+            priority
+          />
+        </div>
       </div>
 
       {/* Nav */}

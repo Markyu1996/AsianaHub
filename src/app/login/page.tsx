@@ -49,10 +49,10 @@ export default function LoginPage() {
         {/* Logo area */}
         <div className="flex justify-center mb-8">
           <Image
-            src="/logo.png"
+            src="/logo-horizontal.png"
             alt="Asiana Hospitality Academy"
-            width={260}
-            height={88}
+            width={300}
+            height={109}
             className="h-auto drop-shadow-sm"
             priority
           />
