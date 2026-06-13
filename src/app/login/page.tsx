@@ -44,16 +44,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo area */}
         <div className="flex justify-center mb-8">
           <Image
             src="/logo.png"
             alt="Asiana Hospitality Academy"
-            width={220}
-            height={74}
-            className="h-auto"
+            width={260}
+            height={88}
+            className="h-auto drop-shadow-sm"
             priority
           />
         </div>
