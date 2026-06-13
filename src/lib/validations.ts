@@ -59,7 +59,7 @@ export const createRequestSchema = z.object({
     .max(200, 'Amount cannot exceed RM200'),
 })
 
-export const attendRequestSchema = z.object({
+export const approveRequestSchema = z.object({
   comment: z.string().max(500).optional(),
 })
 

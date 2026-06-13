@@ -31,20 +31,7 @@ export async function GET(
       return apiError('Not found', 404)
     }
 
-    // Check for outstanding advances for the same student
-    let hasOutstanding = false
-    if (session.role === 'approver' || session.role === 'admin') {
-      const outstanding = await prisma.advanceRequest.count({
-        where: {
-          studentId: request.studentId,
-          id: { not: id },
-          status: { in: ['attended', 'pending_return'] }
-        }
-      })
-      hasOutstanding = outstanding > 0
-    }
-
-    return apiSuccess({ ...request, hasOutstanding })
+    return apiSuccess(request)
   } catch (err: unknown) {
     if (err instanceof Error && err.message === 'UNAUTHORIZED') return apiError('Unauthorized', 401)
     console.error('Get request error:', err)

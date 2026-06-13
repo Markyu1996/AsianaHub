@@ -16,7 +16,6 @@ interface RequestDetail {
   attendedAt: string | null
   returnedAt: string | null
   deletedAt: string | null
-  hasOutstanding: boolean
   student: { id: number; name: string; icNumber: string }
   requester: { id: number; name: string; email: string }
   attendedByUser: { id: number; name: string } | null
@@ -74,7 +73,7 @@ export default function RequestDetailPage() {
   const [request, setRequest] = useState<RequestDetail | null>(null)
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState(false)
-  const [modal, setModal] = useState<'attend' | 'complete' | 'delete' | null>(null)
+  const [modal, setModal] = useState<'approve' | 'delete' | null>(null)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -92,7 +91,7 @@ export default function RequestDetailPage() {
 
   useEffect(() => { fetchRequest() }, [fetchRequest])
 
-  async function handleAction(action: 'attend' | 'complete' | 'delete', comment: string) {
+  async function handleAction(action: 'approve' | 'delete', comment: string) {
     setActionLoading(true)
     setModal(null)
     try {
@@ -105,8 +104,7 @@ export default function RequestDetailPage() {
       if (!res.ok) { toast.error(data.error); return }
 
       const messages = {
-        attend: 'Request marked as attended',
-        complete: 'Advance marked as returned — request completed',
+        approve: 'Request approved & completed',
         delete: 'Request deleted',
       }
       toast.success(messages[action])
@@ -185,21 +183,6 @@ export default function RequestDetailPage() {
           {getStatusLabel(request.status)}
         </span>
       </div>
-
-      {/* Outstanding warning */}
-      {request.hasOutstanding && canAct && request.status === 'pending' && (
-        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl mb-5">
-          <svg className="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-          <div>
-            <p className="text-red-800 font-semibold text-sm">Outstanding advance warning</p>
-            <p className="text-red-600 text-sm mt-0.5">
-              This student has an existing advance that has not been returned yet.
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Main info card */}
       <div className="card p-6 mb-4">
@@ -284,7 +267,7 @@ export default function RequestDetailPage() {
           {request.returnedByUser && request.returnedAt && (
             <li className="ml-4">
               <div className="absolute w-3 h-3 bg-green-500 rounded-full -left-1.5 border-2 border-white" />
-              <p className="text-sm font-medium text-slate-900">Advance returned — completed</p>
+              <p className="text-sm font-medium text-slate-900">Approved &amp; completed</p>
               <p className="text-xs text-slate-500">{request.returnedByUser.name} · {formatDateTime(request.returnedAt)}</p>
             </li>
           )}
@@ -309,26 +292,14 @@ export default function RequestDetailPage() {
         <div className="card p-4 flex flex-wrap gap-3">
           {request.status === 'pending' && (
             <button
-              className="btn-primary"
-              onClick={() => setModal('attend')}
+              className="btn bg-green-600 text-white hover:bg-green-700"
+              onClick={() => setModal('approve')}
               disabled={actionLoading}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Mark as Attended
-            </button>
-          )}
-          {request.status === 'pending_return' && (
-            <button
-              className="btn bg-green-600 text-white hover:bg-green-700"
-              onClick={() => setModal('complete')}
-              disabled={actionLoading}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Mark as Returned
+              Approve
             </button>
           )}
           {canDelete && (
@@ -347,25 +318,15 @@ export default function RequestDetailPage() {
       )}
 
       {/* Modals */}
-      {modal === 'attend' && (
+      {modal === 'approve' && (
         <ConfirmModal
-          title="Mark as Attended"
-          message="Confirm that you have disbursed the advance to the student. This will move the request to Pending Return."
-          confirmLabel="Confirm Attended"
-          confirmClass="btn-primary"
-          onConfirm={comment => handleAction('attend', comment)}
+          title="Approve Request"
+          message="Confirm that you have disbursed the advance to the student. This will complete the request."
+          confirmLabel="Confirm Approval"
+          confirmClass="btn bg-green-600 text-white hover:bg-green-700"
+          onConfirm={comment => handleAction('approve', comment)}
           onCancel={() => setModal(null)}
           withComment
-        />
-      )}
-      {modal === 'complete' && (
-        <ConfirmModal
-          title="Mark as Returned"
-          message="Confirm that the student has returned the advance. This will complete the request."
-          confirmLabel="Confirm Returned"
-          confirmClass="btn bg-green-600 text-white hover:bg-green-700"
-          onConfirm={comment => handleAction('complete', comment)}
-          onCancel={() => setModal(null)}
         />
       )}
       {modal === 'delete' && (

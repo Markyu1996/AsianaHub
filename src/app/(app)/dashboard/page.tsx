@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 interface SessionUser { id: number; name: string; role: string }
-interface Stats { pending: number; pendingReturn: number; completed: number; total: number }
+interface Stats { pending: number; completed: number; total: number }
 
 export default function DashboardPage() {
   const [user, setUser] = useState<SessionUser | null>(null)
@@ -35,10 +35,9 @@ export default function DashboardPage() {
 
       {/* Stats row */}
       {stats && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-4 mb-8">
           {[
             { label: 'Pending', value: stats.pending, color: 'text-amber-600', bg: 'bg-amber-50' },
-            { label: 'Pending Return', value: stats.pendingReturn, color: 'text-orange-600', bg: 'bg-orange-50' },
             { label: 'Completed', value: stats.completed, color: 'text-green-600', bg: 'bg-green-50' },
             { label: 'Total', value: stats.total, color: 'text-brand-600', bg: 'bg-brand-50' },
           ].map(s => (

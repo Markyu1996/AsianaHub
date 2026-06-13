@@ -19,7 +19,6 @@ interface SessionUser { role: string; id: number }
 const STATUS_OPTIONS = [
   { value: 'all', label: 'All Statuses' },
   { value: 'pending', label: 'Pending' },
-  { value: 'pending_return', label: 'Pending Return' },
   { value: 'completed', label: 'Completed' },
   { value: 'deleted', label: 'Deleted (Admin)' },
 ]
