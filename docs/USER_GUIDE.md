@@ -31,7 +31,7 @@
 
 ## For Requesters
 
-Requesters can submit money advance requests on behalf of students.
+Requesters can submit allowance advance requests on behalf of students.
 
 ### Submitting a New Request
 
@@ -123,7 +123,7 @@ If a request needs to be cancelled before it is approved:
 
 After logging in, the **Dashboard** shows:
 - Quick stats: number of pending, completed, and total requests
-- Feature cards — click **Money Advance** to go to the requests module
+- Feature cards — click **Allowance Advance** to go to the requests module
 
 ---
 

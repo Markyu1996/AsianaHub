@@ -119,10 +119,10 @@ export async function sendNewRequestNotification(
     to: FROM,
     // BCC so recipients don't see each other's addresses
     bcc: recipients.join(','),
-    subject: `New advance request: ${details.studentName} — RM${details.amount}`,
+    subject: `New allowance advance request: ${details.studentName} — RM${details.amount}`,
     html: `
       <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
-        <h2 style="color: #1e40af;">New Money Advance Request</h2>
+        <h2 style="color: #1e40af;">New Allowance Advance Request</h2>
         <p>A new advance request has been submitted and is waiting for approval.</p>
         <table style="width:100%;border-collapse:collapse;font-size:14px;margin:16px 0;">
           <tr><td style="padding:4px 0;color:#6b7280;">Student</td><td style="padding:4px 0;font-weight:600;">${details.studentName}</td></tr>
