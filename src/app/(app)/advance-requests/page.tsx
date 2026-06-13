@@ -10,6 +10,7 @@ interface Request {
   frequency: number
   status: string
   createdAt: string
+  returnedAt: string | null
   student: { name: string; icNumber: string }
   requester: { name: string }
 }
@@ -146,7 +147,7 @@ export default function AdvanceRequestsPage() {
                   {user?.role !== 'requester' && (
                     <th className="text-left px-4 py-3 font-medium text-slate-500">Submitted by</th>
                   )}
-                  <th className="text-left px-4 py-3 font-medium text-slate-500">Date</th>
+                  <th className="text-left px-4 py-3 font-medium text-slate-500">Approved</th>
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
@@ -165,7 +166,7 @@ export default function AdvanceRequestsPage() {
                     {user?.role !== 'requester' && (
                       <td className="px-4 py-3 text-slate-500">{req.requester.name}</td>
                     )}
-                    <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{formatDate(req.createdAt)}</td>
+                    <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{req.returnedAt ? formatDate(req.returnedAt) : '—'}</td>
                     <td className="px-4 py-3">
                       <Link href={`/advance-requests/${req.id}`} className="btn-ghost btn-sm">
                         View

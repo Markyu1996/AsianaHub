@@ -75,6 +75,9 @@ export default function RequestDetailPage() {
   const [actionLoading, setActionLoading] = useState(false)
   const [modal, setModal] = useState<'approve' | 'delete' | null>(null)
   const [copied, setCopied] = useState(false)
+  const [editingDate, setEditingDate] = useState(false)
+  const [dateValue, setDateValue] = useState('')
+  const [savingDate, setSavingDate] = useState(false)
 
   useEffect(() => {
     fetch('/api/auth/me').then(r => r.json()).then(d => setUser(d.user))
@@ -118,6 +121,34 @@ export default function RequestDetailPage() {
       toast.error('Something went wrong')
     } finally {
       setActionLoading(false)
+    }
+  }
+
+  function startEditDate() {
+    // Pre-fill the date input with the current approved date (yyyy-mm-dd)
+    const current = request?.returnedAt ? new Date(request.returnedAt) : new Date()
+    setDateValue(current.toISOString().slice(0, 10))
+    setEditingDate(true)
+  }
+
+  async function handleSaveDate() {
+    if (!dateValue) return
+    setSavingDate(true)
+    try {
+      const res = await fetch(`/api/requests/${id}/approved-date`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approvedDate: dateValue }),
+      })
+      const data = await res.json()
+      if (!res.ok) { toast.error(data.error || 'Could not update date'); return }
+      toast.success('Approved date updated')
+      setEditingDate(false)
+      fetchRequest()
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setSavingDate(false)
     }
   }
 
@@ -286,6 +317,45 @@ export default function RequestDetailPage() {
           </div>
         )}
       </div>
+
+      {/* Approved date — admins can correct/backdate it (e.g. for backlog) */}
+      {user?.role === 'admin' && request.status === 'completed' && (
+        <div className="card p-5 mb-4">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900">Approved date</h3>
+              <p className="text-sm text-slate-500 mt-0.5">
+                {request.returnedAt ? formatDateTime(request.returnedAt) : 'Not set'}
+              </p>
+            </div>
+            {!editingDate && (
+              <button className="btn-secondary btn-sm" onClick={startEditDate}>
+                Edit date
+              </button>
+            )}
+          </div>
+          {editingDate && (
+            <div className="flex flex-wrap items-end gap-3 mt-3">
+              <div className="flex-1 min-w-[160px]">
+                <label className="label">Approved on</label>
+                <input
+                  type="date"
+                  className="input"
+                  value={dateValue}
+                  max={new Date().toISOString().slice(0, 10)}
+                  onChange={e => setDateValue(e.target.value)}
+                />
+              </div>
+              <button className="btn-primary" onClick={handleSaveDate} disabled={savingDate || !dateValue}>
+                {savingDate ? 'Saving…' : 'Save'}
+              </button>
+              <button className="btn-secondary" onClick={() => setEditingDate(false)} disabled={savingDate}>
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Action buttons */}
       {!isDeleted && canAct && (

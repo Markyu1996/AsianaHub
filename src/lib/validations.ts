@@ -67,6 +67,11 @@ export const deleteRequestSchema = z.object({
   comment: z.string().max(500).optional(),
 })
 
+export const updateApprovedDateSchema = z.object({
+  // yyyy-mm-dd from a native date input
+  approvedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid date'),
+})
+
 export const studentSchema = z.object({
   icNumber: z.string().min(1, 'IC Number is required').max(50),
   name: z.string().min(2, 'Name must be at least 2 characters').max(200),

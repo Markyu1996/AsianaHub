@@ -81,7 +81,7 @@ model AdvanceRequest {
 model AuditLog {
   id         Int      @id @default(autoincrement())
   userId     Int?
-  action     String   // REQUEST_CREATED | REQUEST_APPROVED | REQUEST_DELETED | ACCOUNT_APPROVED | PASSWORD_RESET | STUDENT_CREATED | STUDENT_UPDATED | USER_DEACTIVATED
+  action     String   // REQUEST_CREATED | REQUEST_APPROVED | APPROVED_DATE_UPDATED | REQUEST_DELETED | ACCOUNT_APPROVED | PASSWORD_RESET | STUDENT_CREATED | STUDENT_UPDATED | USER_DEACTIVATED
   entityType String   // request | student | user
   entityId   Int?
   metadata   String?  // JSON string
