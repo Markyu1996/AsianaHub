@@ -31,6 +31,7 @@ model User {
   studentsUpdated      Student[]        @relation("StudentUpdatedBy")
   auditLogs            AuditLog[]
   passwordResetTokens  PasswordResetToken[]
+  workdayUploads       WorkdayRecord[]  @relation("WorkdayUploadedBy")
 }
 
 model Student {
@@ -47,6 +48,7 @@ model Student {
   updater  User? @relation("StudentUpdatedBy", fields: [updatedBy], references: [id])
 
   requests AdvanceRequest[]
+  workdayRecord WorkdayRecord?
 }
 
 model AdvanceRequest {
@@ -77,18 +79,25 @@ model AdvanceRequest {
   attendedByUser User? @relation("AttendedByRelation", fields: [attendedBy], references: [id])
   returnedByUser User? @relation("ReturnedByRelation", fields: [returnedBy], references: [id])
   deletedByUser  User? @relation("DeletedByRelation", fields: [deletedBy], references: [id])
+
+  @@index([status])
+  @@index([studentId])
+  @@index([requesterId])
 }
 
 model AuditLog {
   id         Int      @id @default(autoincrement())
   userId     Int?
-  action     String   // REQUEST_CREATED | REQUEST_APPROVED | APPROVED_DATE_UPDATED | REQUEST_DELETED | ACCOUNT_APPROVED | PASSWORD_RESET | STUDENT_CREATED | STUDENT_UPDATED | USER_DEACTIVATED
-  entityType String   // request | student | user
+  action     String   // REQUEST_CREATED | REQUEST_APPROVED | APPROVED_DATE_UPDATED | REQUEST_DELETED | ACCOUNT_APPROVED | PASSWORD_RESET | STUDENT_CREATED | STUDENT_UPDATED | USER_DEACTIVATED | WORKDAY_CSV_IMPORTED | WORKDAY_SETTINGS_UPDATED | EMPLOYER_GROUP_CREATED | EMPLOYER_GROUP_UPDATED | EMPLOYER_GROUP_DELETED
+  entityType String   // request | student | user | workday
   entityId   Int?
   metadata   String?  // JSON string
   createdAt  DateTime @default(now())
 
   user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([entityType, entityId])
 }
 
 model PasswordResetToken {
@@ -100,4 +109,48 @@ model PasswordResetToken {
   createdAt DateTime  @default(now())
 
   user User @relation(fields: [userId], references: [id])
+}
+
+// ── Workday Tracking module ────────────────────────────────────────────────
+
+// An employer that provides internship workdays. Each group has its own
+// monthly cutoff day; an uploaded CSV reflects workdays only up to that day.
+model EmployerGroup {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  cutoffDay Int      // day of month (1-31) the group's data is current up to
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  records WorkdayRecord[]
+}
+
+// Global, admin-editable settings for the estimation engine. Single row.
+model WorkdaySettings {
+  id               Int      @id @default(autoincrement())
+  workdaysPerWeek  Int      @default(6)
+  requiredWorkdays Int      @default(0)
+  updatedBy        Int?
+  updatedAt        DateTime @updatedAt
+}
+
+// One current snapshot per student. Each CSV upload overwrites the running
+// cumulative total (no history kept). The total is accurate as of the
+// student's employer-group cutoff day within the data month (dataYear/dataMonth).
+model WorkdayRecord {
+  id                 Int      @id @default(autoincrement())
+  studentId          Int      @unique
+  employerGroupId    Int
+  cumulativeWorkdays Int      // floored whole days
+  dataYear           Int      // year of the data month (the T-1 month)
+  dataMonth          Int      // 1-12, the data month
+  uploadedBy         Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  student       Student       @relation(fields: [studentId], references: [id])
+  employerGroup EmployerGroup @relation(fields: [employerGroupId], references: [id])
+  uploader      User?         @relation("WorkdayUploadedBy", fields: [uploadedBy], references: [id])
+
+  @@index([employerGroupId])
 }
