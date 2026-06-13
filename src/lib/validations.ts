@@ -61,6 +61,8 @@ export const createRequestSchema = z.object({
 
 export const approveRequestSchema = z.object({
   comment: z.string().max(500).optional(),
+  // Optional approval date (yyyy-mm-dd); defaults to now when omitted
+  approvedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid date').optional(),
 })
 
 export const deleteRequestSchema = z.object({

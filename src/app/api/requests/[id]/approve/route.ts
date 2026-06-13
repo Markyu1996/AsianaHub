@@ -22,6 +22,17 @@ export async function POST(
     if (!request) return apiError('Request not found', 404)
     if (request.status !== 'pending') return apiError('Only pending requests can be approved')
 
+    // Optional backdated approval date (anchored to midday UTC for a stable
+    // calendar date across time zones); defaults to now.
+    let approvedAt = new Date()
+    if (parsed.data.approvedDate) {
+      approvedAt = new Date(`${parsed.data.approvedDate}T12:00:00Z`)
+      if (isNaN(approvedAt.getTime())) return apiError('Enter a valid date')
+      if (approvedAt.getTime() > Date.now()) {
+        return apiError('Approval date cannot be in the future')
+      }
+    }
+
     // Approval immediately completes the request — there is no separate
     // "student returns money" step. The approver is recorded as the completer.
     const updated = await prisma.advanceRequest.update({
@@ -29,7 +40,7 @@ export async function POST(
       data: {
         status: 'completed',
         returnedBy: session.id,
-        returnedAt: new Date(),
+        returnedAt: approvedAt,
         comment: parsed.data.comment || null,
       },
       include: {
@@ -40,7 +51,8 @@ export async function POST(
     })
 
     await logAudit(session.id, 'REQUEST_APPROVED', 'request', id, {
-      comment: parsed.data.comment
+      comment: parsed.data.comment,
+      approvedAt,
     })
 
     return apiSuccess(updated)

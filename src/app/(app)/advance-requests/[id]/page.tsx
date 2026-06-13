@@ -26,22 +26,38 @@ interface RequestDetail {
 interface SessionUser { id: number; name: string; role: string }
 
 function ConfirmModal({
-  title, message, confirmLabel, confirmClass, onConfirm, onCancel, withComment
+  title, message, confirmLabel, confirmClass, onConfirm, onCancel, withComment, withDate
 }: {
   title: string
   message: string
   confirmLabel: string
   confirmClass: string
-  onConfirm: (comment: string) => void
+  onConfirm: (comment: string, date: string) => void
   onCancel: () => void
   withComment?: boolean
+  withDate?: boolean
 }) {
+  const today = new Date().toISOString().slice(0, 10)
   const [comment, setComment] = useState('')
+  const [date, setDate] = useState(today)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
       <div className="card p-6 w-full max-w-md">
         <h3 className="text-lg font-semibold text-slate-900 mb-2">{title}</h3>
         <p className="text-slate-500 text-sm mb-4">{message}</p>
+        {withDate && (
+          <div className="mb-4">
+            <label className="label">Approval date</label>
+            <input
+              type="date"
+              className="input"
+              value={date}
+              max={today}
+              onChange={e => setDate(e.target.value)}
+            />
+            <p className="text-xs text-slate-400 mt-1">Defaults to today — change it to record a backdated approval.</p>
+          </div>
+        )}
         {withComment && (
           <div className="mb-4">
             <label className="label">Comment (optional)</label>
@@ -57,7 +73,7 @@ function ConfirmModal({
         )}
         <div className="flex gap-3 justify-end">
           <button className="btn-secondary" onClick={onCancel}>Cancel</button>
-          <button className={confirmClass} onClick={() => onConfirm(comment)}>{confirmLabel}</button>
+          <button className={confirmClass} onClick={() => onConfirm(comment, date)} disabled={withDate && !date}>{confirmLabel}</button>
         </div>
       </div>
     </div>
@@ -94,14 +110,16 @@ export default function RequestDetailPage() {
 
   useEffect(() => { fetchRequest() }, [fetchRequest])
 
-  async function handleAction(action: 'approve' | 'delete', comment: string) {
+  async function handleAction(action: 'approve' | 'delete', comment: string, date?: string) {
     setActionLoading(true)
     setModal(null)
     try {
+      const body: { comment: string; approvedDate?: string } = { comment }
+      if (action === 'approve' && date) body.approvedDate = date
       const res = await fetch(`/api/requests/${id}/${action}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ comment }),
+        body: JSON.stringify(body),
       })
       const data = await res.json()
       if (!res.ok) { toast.error(data.error); return }
@@ -394,8 +412,9 @@ export default function RequestDetailPage() {
           message="Confirm that you have disbursed the advance to the student. This will complete the request."
           confirmLabel="Confirm Approval"
           confirmClass="btn bg-green-600 text-white hover:bg-green-700"
-          onConfirm={comment => handleAction('approve', comment)}
+          onConfirm={(comment, date) => handleAction('approve', comment, date)}
           onCancel={() => setModal(null)}
+          withDate
           withComment
         />
       )}
