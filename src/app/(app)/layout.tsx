@@ -34,11 +34,12 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
     { type: 'link', href: '/dashboard', label: 'Dashboard', icon: 'home' },
     {
       type: 'group',
-      label: 'Money Advance',
+      label: 'Allowance Advance',
       icon: 'wallet',
       items: [
         { href: '/advance-requests', label: 'My Requests', icon: 'document' },
         { href: '/advance-requests/new', label: 'New Request', icon: 'plus' },
+        { href: '/reports', label: 'Reports', icon: 'chart' },
       ],
     },
     { type: 'link', href: '/workdays', label: 'Workday Tracking', icon: 'calendar' },
@@ -47,10 +48,11 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
     { type: 'link', href: '/dashboard', label: 'Dashboard', icon: 'home' },
     {
       type: 'group',
-      label: 'Money Advance',
+      label: 'Allowance Advance',
       icon: 'wallet',
       items: [
         { href: '/advance-requests', label: 'All Requests', icon: 'document' },
+        { href: '/reports', label: 'Reports', icon: 'chart' },
       ],
     },
     { type: 'link', href: '/workdays', label: 'Workday Tracking', icon: 'calendar' },
@@ -59,11 +61,12 @@ const NAV_ITEMS: Record<string, NavEntry[]> = {
     { type: 'link', href: '/dashboard', label: 'Dashboard', icon: 'home' },
     {
       type: 'group',
-      label: 'Money Advance',
+      label: 'Allowance Advance',
       icon: 'wallet',
       items: [
         { href: '/advance-requests', label: 'All Requests', icon: 'document' },
         { href: '/advance-requests/new', label: 'New Request', icon: 'plus' },
+        { href: '/reports', label: 'Reports', icon: 'chart' },
       ],
     },
     { type: 'link', href: '/workdays', label: 'Workday Tracking', icon: 'calendar' },
@@ -93,6 +96,7 @@ function Icon({ name, className = 'w-5 h-5' }: { name: string; className?: strin
     wallet: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 12V7H5a2 2 0 010-4h12v4M3 5v14a2 2 0 002 2h16v-5M18 12a2 2 0 000 4h4v-4h-4z" />,
     database: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 7c0-1.657 3.582-3 8-3s8 1.343 8 3-3.582 3-8 3-8-1.343-8-3zm0 0v10c0 1.657 3.582 3 8 3s8-1.343 8-3V7m-16 5c0 1.657 3.582 3 8 3s8-1.343 8-3" />,
     calendar: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />,
+    chart: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 19v-6m4 6V5m4 14v-9M5 21h14a1 1 0 001-1V4a1 1 0 00-1-1H5a1 1 0 00-1 1v16a1 1 0 001 1z" />,
     logout: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />,
     menu: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />,
     x: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />,

@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { requireSession, logAudit } from '@/lib/auth'
 import { createRequestSchema } from '@/lib/validations'
 import { apiError, apiSuccess, getStartOfMonth } from '@/lib/utils'
+import { sendNewRequestNotification } from '@/lib/email'
 
 export async function GET(req: NextRequest) {
   try {
@@ -133,6 +134,27 @@ export async function POST(req: NextRequest) {
       amount,
       frequency
     })
+
+    // Notify all active approvers & admins — fire-and-forget so a slow or
+    // failing mail server never blocks or fails the submission.
+    void (async () => {
+      const recipients = await prisma.user.findMany({
+        where: { role: { in: ['approver', 'admin'] }, status: 'active' },
+        select: { email: true },
+      })
+      await sendNewRequestNotification(
+        recipients.map(r => r.email).filter(Boolean),
+        {
+          requestId: request.id,
+          studentName: request.student.name,
+          icNumber: request.student.icNumber,
+          amount: request.amount,
+          frequency: request.frequency,
+          requesterName: request.requester.name,
+          remark: request.remark,
+        }
+      )
+    })().catch(err => console.error('New-request notification failed:', err))
 
     return apiSuccess(request, 201)
   } catch (err: unknown) {
