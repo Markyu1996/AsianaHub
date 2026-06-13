@@ -14,8 +14,12 @@ export async function GET(req: NextRequest) {
 
     const where: Record<string, unknown> = {}
 
+    const cutoff = new Date()
+    cutoff.setMonth(cutoff.getMonth() - 18)
+
     if (!includeInactive || session.role !== 'admin') {
       where.isActive = true
+      where.createdAt = { gt: cutoff }
     }
 
     if (search) {
