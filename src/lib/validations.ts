@@ -80,6 +80,34 @@ export const studentSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(200),
 })
 
+// ── Workday Tracking ────────────────────────────────────────────────────────
+
+export const workdaySettingsSchema = z.object({
+  workdaysPerWeek: z
+    .number()
+    .int('Workdays per week must be a whole number')
+    .min(1, 'Workdays per week must be at least 1')
+    .max(7, 'Workdays per week cannot exceed 7'),
+  requiredWorkdays: z
+    .number()
+    .int('Required workdays must be a whole number')
+    .min(0, 'Required workdays cannot be negative')
+    .max(100000, 'Required workdays is too large'),
+})
+
+export const employerGroupSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, 'Group name is required')
+    .max(100, 'Group name is too long'),
+  cutoffDay: z
+    .number()
+    .int('Cutoff day must be a whole number')
+    .min(1, 'Cutoff day must be between 1 and 31')
+    .max(31, 'Cutoff day must be between 1 and 31'),
+})
+
 export const createUserSchema = z.object({
   name: z.string().min(2).max(100),
   email: z.string().email(),

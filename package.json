@@ -18,8 +18,8 @@
     "@prisma/client": "^5.14.0",
     "bcryptjs": "^2.4.3",
     "jose": "^5.4.1",
-    "next": "14.2.3",
-    "nodemailer": "^6.9.13",
+    "next": "14.2.35",
+    "nodemailer": "^8.0.11",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "eslint": "^8",
-    "eslint-config-next": "14.2.3",
+    "eslint-config-next": "14.2.35",
     "prisma": "^5.14.0",
     "tsx": "^4.11.0"
   }
